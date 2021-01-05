@@ -2,7 +2,7 @@
 <html> 
 <head> 
     <meta charset="utf-8"> 
-    <title>我喜欢的歌</title> 
+    <title>青火喜欢的歌</title> 
     <style type="text/css">
 *{margin: 0;padding: 0;list-style: none;}        
 .rightNode{width: 505px;height: 806px;position: absolute;left: 70%;top: 30%;margin: -204px 0 0 -253.5px;border: 1px solid #a6a18d;border-radius:8px;box-shadow: 0 0 16px #a6a18d; background: url(aa.jpg)}
@@ -26,10 +26,12 @@
     background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg); repeat-x;position: relative;
 }
 .lastNode{width: 75px;height: 74px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;left: 118px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
-.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;border-radius:55px;text-align:center;animation:turn 10s linear infinite; }
+.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;border-radius:56px;text-align:center;animation:turn 10s linear infinite; }
 .nextNode{width: 75px;height: 74px;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;position: absolute;left: 306px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
 .volumeNode{width: 37px;height: 32px;background: black no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;border-radius:55px;text-align:center;border-radius:15px;text-align:center;}
 .no_volumeNode{width: 37px;height: 32px;background: blue no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;}
+.modelNode{width: 37px;height: 32px;background: black no-repeat; position: absolute;left: 43px;top: 58px;cursor: pointer;border-radius:55px;text-align:center;border-radius:15px;text-align:center;}
+.no_modelNode{width: 37px;height: 32px;background: blue no-repeat; position: absolute;left: 43px;top: 58px;cursor: pointer;}
 .trueLine{position: absolute;left: 3px;top: 2px;height: 12px;width: 0%;
     background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) repeat-x;border-radius: 6px; 
     border-right: 1px solid #787463;
@@ -66,6 +68,7 @@
             </div>
             <!-- bottomNode 空间元素 -->
             <div class='bottomNode'>
+                <div class='modelNode'><font color="green">顺序</font></div>
                 <!-- lastNode 上一曲的按钮-->
                 <div class='lastNode'><font color="green">上一曲</font></div>
                 <!-- playNode 播放暂停的按钮 -->
@@ -81,6 +84,8 @@
 
     </div>
     <script type="text/javascript">
+        //播放模式
+        var modelType =1;//0 单曲，1顺序
         //播放暂停的按钮
         //playBln 控制播放暂停的布尔值
         var playBtn = document.querySelector('.playNode'),
@@ -89,6 +94,9 @@
         //volumeBln 控制声音的布尔值
         volumeNode = document.querySelector('.volumeNode'),
         volumeBln = true,
+
+        modelNode = document.querySelector('.modelNode'),
+        modelNodeBln = true,
         //进度条的选择器
         trueLine = document.querySelector('.trueLine'),
         //进度条外层的元素
@@ -184,19 +192,36 @@
                 this.className = 'volumeNode';
             }
         };
+        //播放模式的事件
+         modelNode.onclick = function(){
+            modelNodeBln = !modelNodeBln;
+            if(modelNodeBln == false){
+                this.innerHTML ="<font color='green'>单曲</font>";
+                this.className = 'no_modelNode';
+                modelType = 0;
+            }
+            else{
+                this.innerHTML ="<font color='green'>顺序</font>";
+                this.className = 'modelNode';
+                modelType = 1;
+            }
+        };
         //播放时 进度条的长度控制计算
         myAudio.addEventListener('timeupdate',function(){
             trueLine.style.width = myAudio.currentTime / myAudio.duration * 100 + '%';
         });
         // 播放结束时 自动播放下一曲
         myAudio.addEventListener("ended",function(){
-            var indextemp =Index+1;
-            
-            if(indextemp>allMusic.length){
-                indextemp =0;
+            if(modelType!=0){
+                var indextemp =Index+1;
+                if(indextemp>allMusic.length){
+                    indextemp =0;
+                }
+                MusicPlayWithIndexFn(indextemp);    
+            }else{
+                MusicPlayWithIndexFn(Index);
             }
             
-           MusicPlayWithIndexFn(indextemp);
         },false);
         //点击progressNode元素 让进度条直接到达这个位置
         progressNode.onclick = function(e){
@@ -262,9 +287,9 @@
         };
         //document.querySelector('.playNode').click();
         var playList = "",playSize = allMusic.length;
-        var playList =playList+"[<font color='white'>总计"+playSize+"]首歌曲，双击切换</font> <br>";
+        var playList =playList+"[<font color='white'>总计"+playSize+"]首歌曲，双击歌曲切换</font> <br>";
         for(var vi=0;vi<playSize;vi++){
-            playList =playList+"<input type ='text' readonly size =50 value='     ["+allMusic[vi].MusicName+"]    ' ondblclick='MusicPlayWithIndexFn("+vi+")' /> <br>";
+            playList =playList+"<input type ='text' readonly size =30 value='     ["+allMusic[vi].MusicName+"]    ' ondblclick='MusicPlayWithIndexFn("+vi+")' /> <br>";
         }
 
         document.querySelector('.rightNode').innerHTML=playList;

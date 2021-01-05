@@ -26,7 +26,7 @@
     background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg); repeat-x;position: relative;
 }
 .lastNode{width: 75px;height: 74px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;left: 118px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
-.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;border-radius:55px;text-align:center;}
+.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;border-radius:55px;text-align:center;animation:turn 10s linear infinite; }
 .nextNode{width: 75px;height: 74px;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;position: absolute;left: 306px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
 .volumeNode{width: 37px;height: 32px;background: black no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;border-radius:55px;text-align:center;border-radius:15px;text-align:center;}
 .no_volumeNode{width: 37px;height: 32px;background: blue no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;}
@@ -35,6 +35,13 @@
     border-right: 1px solid #787463;
 }
 .musicName{color: white;position: absolute;bottom: 2px;left: 5px;}
+@keyframes turn{
+      0%{-webkit-transform:rotate(0deg);}
+      25%{-webkit-transform:rotate(90deg);}
+      50%{-webkit-transform:rotate(180deg);}
+      75%{-webkit-transform:rotate(270deg);}
+      100%{-webkit-transform:rotate(360deg);}
+    }
     </style>
 </head>
 <body>

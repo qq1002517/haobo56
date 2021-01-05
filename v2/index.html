@@ -25,10 +25,10 @@
     width: 100%;height: 157px;border-top: 1px solid #a29d8a;
     background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg); repeat-x;position: relative;
 }
-.lastNode{width: 75px;height: 74px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;left: 118px;top: 39px;cursor: pointer;}
-.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;}
-.nextNode{width: 75px;height: 74px;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;position: absolute;left: 306px;top: 39px;cursor: pointer;}
-.volumeNode{width: 37px;height: 32px;background: black no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;}
+.lastNode{width: 75px;height: 74px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;left: 118px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
+.playNode{width: 95px;height: 94px;position: absolute;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) no-repeat;left: 202px;top: 29px;cursor: pointer;border-radius:55px;text-align:center;}
+.nextNode{width: 75px;height: 74px;background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgload.jpg) no-repeat;position: absolute;left: 306px;top: 39px;cursor: pointer;border-radius:55px;text-align:center;}
+.volumeNode{width: 37px;height: 32px;background: black no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;border-radius:55px;text-align:center;border-radius:15px;text-align:center;}
 .no_volumeNode{width: 37px;height: 32px;background: blue no-repeat; position: absolute;right: 43px;top: 58px;cursor: pointer;}
 .trueLine{position: absolute;left: 3px;top: 2px;height: 12px;width: 0%;
     background: url(https://www.xuhaobo.cn/mainContext/statichtml/photo/http_imgloa.jpg) repeat-x;border-radius: 6px; 
@@ -90,6 +90,10 @@
         outerNode = document.querySelector('.outerNode'),
         //选择一下封面背景
         topNode = document.querySelector('.topNode'),
+        //播放列表背景
+        rightNode =document.querySelector('.rightNode'),
+        //播放按钮北京
+        playNode = document.querySelector('.playNode'),
         //下一首歌的按钮
         nextNode = document.querySelector('.nextNode'),
         //上一首歌的按钮
@@ -118,6 +122,26 @@
             'MusicSrc':'http://www.0dutv.com/plug/down/up2.php/244135851.mp3',
             'MusicPic':'aa.jpg',
             'MusicName':'你的答案-阿冗'
+        }
+        ,{
+            'MusicSrc':'http://www.0dutv.com/plug/down/up2.php/275243171.mp3',
+            'MusicPic':'http://www.0dutv.com/upload/magic/60.jpg',
+            'MusicName':'兄弟想你了（完整版）'
+        }
+        ,{
+            'MusicSrc':'http://www.0dutv.com/plug/down/up2.php/255415054.mp3',
+            'MusicPic':'http://www.0dutv.com/upload/magic/34.jpg',
+            'MusicName':'赤伶 （DJ版）'
+        }
+         ,{
+            'MusicSrc':'http://www.0dutv.com/plug/down/up2.php/260622978.mp3',
+            'MusicPic':'http://www.0dutv.com/upload/magic/238.jpg',
+            'MusicName':'旧梦一场 （DJ沈念）'
+        }
+        ,{
+            'MusicSrc':'http://www.0dutv.com/plug/down/up2.php/284726298.mp3',
+            'MusicPic':'http://www.0dutv.com/upload/magic/6.jpg',
+            'MusicName':'踏山河-是七叔呢'
         }
 
 
@@ -197,6 +221,8 @@
             }
             //给封面赋值
             topNode.style.backgroundImage = 'url('+allMusic[Index].MusicPic+')';
+            playNode.style.backgroundImage ='url('+allMusic[Index].MusicPic+')';
+            rightNode.style.backgroundImage ='url('+allMusic[Index].MusicPic+')';
             //给音乐名称
             musicName.innerHTML = allMusic[Index].MusicName;
         }
@@ -214,6 +240,8 @@
             }
             //给封面赋值
             topNode.style.backgroundImage = 'url('+allMusic[Index].MusicPic+')';
+            playNode.style.backgroundImage ='url('+allMusic[Index].MusicPic+')';
+            rightNode.style.backgroundImage ='url('+allMusic[Index].MusicPic+')';
             //给音乐名称
             musicName.innerHTML = allMusic[Index].MusicName;
         }

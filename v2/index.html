@@ -215,7 +215,7 @@
         myAudio.addEventListener("ended",function(){
             if(modelType!=0){
                 var indextemp =Index+1;
-                if(indextemp>allMusic.length){
+                if(indextemp>=allMusic.length){
                     indextemp =0;
                 }
                 MusicPlayWithIndexFn(indextemp);    

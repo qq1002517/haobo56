@@ -72,7 +72,7 @@
                 <!-- lastNode 上一曲的按钮-->
                 <div class='lastNode'><font color="green">上一曲</font></div>
                 <!-- playNode 播放暂停的按钮 -->
-                <div class='playNode'><font color="green">播放</font></div>
+                <div class='playNode'><font color="red">暂停</font></div>
                 <!-- nextNode 下一曲的按钮 -->
                 <div class='nextNode'><font color="green">下一曲</font></div>
                 <!-- volumeNode 静音或非静音的按钮-->
@@ -206,9 +206,11 @@
             playBln = !playBln;
             if(playBln == false){
                 myAudio.play();
+                document.querySelector('.playNode').innerHTML='<font color="green" size=1>播放中</font>';
             }
             else{
                 myAudio.pause();
+                document.querySelector('.playNode').innerHTML='<font color="red" size=6>暂停</font>';
             }
         };
         //声音的事件

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Life Game with Wilhelm</title>
+        <title>Life Game with 威廉生命</title>
         <meta charset='utf-8'>
         <script  type="text/javascript" src="lifegame.js"></script>
     </head>
@@ -12,11 +12,147 @@
         <script  type="text/javascript" src="fabric.min.js"></script>
         <div style="margin:20px 50px 20px;padding-bottom:10px;border-bottom:1px solid #c1c1c1;text-align:center;width:502px">
             <input type="button" value="重新开始" style="width:70px;" onclick="javascript:restartLifeGame()">
-            大小：<input type="text" value="38" id="lifeSize" style="width:50px;margin-right:20px;">
+            大小：<input type="text" value="50" id="lifeSize" style="width:50px;margin-right:20px;">
             剩余生命：<span id="remainLifes" style="display:inline-block;width:50px;">0</span>
             进化次数：<span id="period" style="display:inline-block;width:40px;">0</span>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr>
+            python代码
+            <hr>
         </div>
     </center>
+    <pre>
+            <code>
+                #  -*- coding:utf-8 -*-
+
+import math
+import random
+import os
+import time
+import pygame
+
+global timepause 
+timepause = 10
+
+class cell(object):
+
+    
+    """docstring for cell"""
+
+    
+    def __init__(self, nowstate=0, nextstate=0,x=0,y=0):
+        super(cell, self).__init__()
+        if random.randint(0,10)==0 & nowstate==0:
+            self.nowstate = nowstate
+        else:
+            self.nowstate =nowstate
+        self.nextstate= nowstate
+        self.x = x
+        self.y = y
+        
+    def updatecell(self):
+        self.nowstate = self.nextstate
+        self.nextstate = 0
+
+
+class world(object):
+    """docstring for world"""
+    
+    def __init__(self, scale = 100):
+        super(world, self).__init__()
+        self.scale = scale
+        self.worldmap = [[]]
+        self.creatworld
+        pygame.display.set_caption("生命游戏Python版")
+        pygame.init()
+        self.py = 5
+        self.px = 5
+        self.xlen = 400/self.scale
+        self.ylen = 400/self.scale
+
+        self.screen = pygame.display.set_mode([2*self.px+self.scale*self.xlen,2*self.py+self.scale*self.ylen])
+
+
+    def creatworld(self):
+        worldmap = []
+        for x in range(self.scale):
+            raw = []
+            for y in range(self.scale):
+                onecell = cell(random.randint(0,1),0,x,y)
+                raw.append(onecell)
+            worldmap.append(raw)
+        self.worldmap = worldmap
+
+    def outlook(self,x,y):
+        
+        neighbourstate = 0
+
+        for i in range(3):
+            for j in range (3):
+                ii = i
+                jj = j
+                if (x == self.scale-1 and i == 2):
+                    ii = -self.scale+2
+                if (y == self.scale-1 and j ==2):
+                    jj = -self.scale+2
+                neighbourstate += self.worldmap[x+ii-1][y+jj-1].nowstate
+        neighbourstate -= self.worldmap[x][y].nowstate
+
+        return neighbourstate
+
+
+    def evolution(self):
+        for i in range(self.scale):
+            for j in range(self.scale):
+                neighbourstate = self.outlook(i,j)
+                if (neighbourstate == 3 ):
+                    self.worldmap[i][j].nextstate = 1
+                elif(neighbourstate == 2 ):
+                    self.worldmap[i][j].nextstate = self.worldmap[i][j].nowstate
+                else:
+                    self.worldmap[i][j].nextstate = 0
+        
+    def updateworld(self):
+        for i in range(self.scale):
+            for j in range(self.scale):
+                self.worldmap[i][j].updatecell()
+
+
+    def display(self):
+        
+        for i in range(20):
+            self.drawupdateworld()
+            self.updateworld()
+            self.evolution()
+            time.sleep(1)
+        
+
+    def displaycell(self,x,y):
+        for i in range(10):
+            print(self.worldmap[x][y].nowstate,self.worldmap[x][y].nextstate)
+            self.updateworld()
+            self.evolution()
+            time.sleep(0.3)
+        pygame.exit()
+
+    def drawupdateworld(self):
+
+        white = (255,255,255)
+        black = (0,0,0)
+
+        for i in range(self.scale):
+            for j in range(self.scale):
+                if self.worldmap[i][j].nowstate == 1:
+                    pygame.draw.rect(self.screen,white,[i*self.xlen+self.px,j*self.ylen+self.py,self.xlen,self.ylen])
+                if self.worldmap[i][j].nowstate == 0:
+                    pygame.draw.rect(self.screen,black,[i*self.xlen+self.px,j*self.ylen+self.py,self.xlen,self.ylen])
+
+        pygame.display.update()
+
+
+oneworld = world(30)
+oneworld.creatworld()
+oneworld.display()
+            </code></pre>
         <script>
             var life;
             var lifeTimer = 0;
@@ -81,7 +217,7 @@
                       }
                   }
                 refreshLife(); 
-                lifeTimer = setInterval(refreshLife, 300);
+                lifeTimer = setInterval(refreshLife, 600);
             }
 
             function refreshLife()
